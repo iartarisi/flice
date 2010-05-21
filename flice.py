@@ -46,22 +46,27 @@ def get_licenses_from_page(license_page):
                        """, re.X)
     licenses = set()
 
-    # First one's the table header
+    # First one is the table header
     [licenses.add(l) for l in re.findall(regy, license_page)[1:]]
     return licenses
 
-class Licenseefey(func_module.FuncModule):
+class Flice(func_module.FuncModule):
 
     # Update these if need be.
     version = "0.0.1"
     api_version = "0.0.1"
-    description = "check if an rpm's license is approved by Fedora"
+    description = "check if an srpm's license is approved by Fedora"
 
     lpage = lpages(FEDORA_LICENSES, CODE_SECTION)
     good_licenses = get_licenses_from_page(lpage)
 
     def check(self, srpm_path):
+        """Check the SRPM on the given path for Fedora License compliance
 
+        Receives a 'file://' or 'http(s)://' path to a SRPM, downloads the
+        file if necessary, extracts the yum metadata and compares to our
+        list of licenses.
+        """
         if 'file://' in srpm_path:
             pkg_path = srpm_path.replace('file://','')
             if not os.path.isfile(pkg_path):
