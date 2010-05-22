@@ -28,15 +28,3 @@ If you had downloaded fedora-release-10-1.src.rpm on your minion you could do:
 
 $ func minion1 call flice check 'file:///tmp/fedora-release-10-1.src.rpm'
 {'minion1': ['GPLv2', 'Good.']}
-
-
-
-
-
-
-
-
-
-
-
-

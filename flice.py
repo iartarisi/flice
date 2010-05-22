@@ -70,9 +70,12 @@ class Flice(func_module.FuncModule):
         if 'file://' in srpm_path:
             pkg_path = srpm_path.replace('file://','')
             if not os.path.isfile(pkg_path):
-                return "Couldn't find the srpm file."
+                return "Couldn't find the srpm file: %s." % pkg_path
         elif 'http' in srpm_path:
-            pkg_path = urllib.urlretrieve(srpm_path)[0]
+            try:
+                pkg_path = urllib.urlretrieve(srpm_path)[0]
+            except:
+                return "Couldn't open the url: %s" % pkg_path
         else:
             return "Don't know how to open that."
 
